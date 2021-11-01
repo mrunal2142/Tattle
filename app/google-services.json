@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "971611402588",
+    "project_id": "tattle-acc50",
+    "storage_bucket": "tattle-acc50.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:971611402588:android:40d16f714268827c115199",
+        "android_client_info": {
+          "package_name": "com.md.tattle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "971611402588-b4soe52u758lt31ekhbj5k8mi1jreuvk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDD7eRyNdUBf909X5rvmxEj0Kjg-QFRAVo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "971611402588-b4soe52u758lt31ekhbj5k8mi1jreuvk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

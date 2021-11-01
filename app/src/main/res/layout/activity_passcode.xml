@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.passcode">
+
+    <com.hanks.passcodeview.PasscodeView
+        android:id="@+id/passcodeView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:normalStateColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:wrongStateColor="@color/red"
+        app:numberTextColor="@color/black">
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/assistant"
+            android:text="Enter your pincode" />
+    </com.hanks.passcodeview.PasscodeView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
