@@ -96,6 +96,8 @@ public class profileSetup extends AppCompatActivity {
                 } else {
                     //uploading user without profiel picture
 
+                    b.continueBtn.setVisibility(View.INVISIBLE);
+
                     b.profprogressBar.setVisibility(View.VISIBLE);
                     b.profprogressBar.setProgress(p , true);
 
