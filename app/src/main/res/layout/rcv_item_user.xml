@@ -46,6 +46,7 @@
         android:textSize="12dp"
         android:maxWidth="200dp"
         android:maxHeight="17dp"
+        android:textColor="@color/bluePie"
         app:layout_constraintEnd_toEndOf="@+id/rcv_name"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/rcv_name"

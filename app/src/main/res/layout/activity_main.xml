@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="1dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="1dp"
                 android:fontFamily="@font/assistant"
                 android:text="Tattle"
@@ -47,6 +48,7 @@
                 android:textSize="18dp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/prof"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -60,8 +62,7 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar">
+        app:layout_constraintStart_toStartOf="parent">
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -76,22 +77,22 @@
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
             tools:listitem="@layout/rcv_item_user" />
 
-       <com.google.android.material.card.MaterialCardView
-           android:id="@+id/group"
-           android:layout_width="50dp"
-           app:cardCornerRadius="50dp"
-           android:layout_gravity="bottom|right"
-           android:layout_margin="16dp"
-           android:layout_height="50dp">
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/group"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="50dp">
 
-           <ImageView
-               android:id="@+id/imageView2"
-               android:layout_width="30dp"
-               android:layout_height="30dp"
-               android:layout_gravity="center"
-               app:srcCompat="@drawable/groups" />
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/gt" />
 
-       </com.google.android.material.card.MaterialCardView>
+        </com.google.android.material.card.MaterialCardView>
 
     </FrameLayout>
 
