@@ -42,4 +42,10 @@ public class passcode extends AppCompatActivity {
             startActivity(new Intent(passcode.this , MainActivity.class));
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finishAffinity();
+    }
 }

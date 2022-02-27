@@ -4,11 +4,19 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.md.tattle.Models.messageModel;
 import com.md.tattle.R;
 import com.md.tattle.databinding.ItemContainerReceiveMessageBinding;
@@ -23,7 +31,7 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
     public static final int VIEW_TYPE_SENT = 1;
     public static final int VIEW_TYPE_RECEIVED = 2;
     private final List<messageModel> list;
-    private Context context;
+    public static Context context;
 
     public messageAdapter(List<messageModel> list, Context context) {
         this.list = list;
@@ -84,18 +92,69 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
 
     static class receiveMessageViewHolder extends RecyclerView.ViewHolder {
 
-        ItemContainerReceiveMessageBinding binding;
+         ItemContainerReceiveMessageBinding binding;
 
         public receiveMessageViewHolder(@NonNull View itemView) {
             super(itemView);
             binding = ItemContainerReceiveMessageBinding.bind(itemView);
         }
 
-        void setData(messageModel messageModel) {
+        void setData(messageModel messageModel ) {
             binding.messageGreyText.setText(messageModel.message);
             long time = messageModel.timeStamp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
             binding.messageGreyTimeStamp.setText(dateFormat.format(new Date(time)));
+            //translation part
+            binding.materialCardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(context, binding.messageGreyText.getText().toString(), Toast.LENGTH_SHORT).show();
+
+                    TranslatorOptions options =
+                            new TranslatorOptions.Builder()
+                                    .setSourceLanguage(TranslateLanguage.ENGLISH)
+                                    .setTargetLanguage(TranslateLanguage.HINDI)
+                                    .build();
+                    final Translator englishToHindi =
+                            Translation.getClient(options);
+
+                    DownloadConditions conditions = new DownloadConditions.Builder()
+                            .requireWifi()
+                            .build();
+
+                    englishToHindi.downloadModelIfNeeded(conditions)
+                            .addOnSuccessListener(unused -> {
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+
+                                englishToHindi.translate(binding.messageGreyText.getText().toString())
+                                        .addOnSuccessListener(new OnSuccessListener<String>() {
+                                            @Override
+                                            public void onSuccess(String s) {
+                                                Toast.makeText(context, "Inner success " + s, Toast.LENGTH_SHORT).show();
+                                                binding.messageGreyText.setText(s);
+                                            }
+                                        })
+
+                                        .addOnFailureListener(
+                                                new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // Error.
+                                                        // ...
+                                                        Toast.makeText(context, "Inner failure", Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, "failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                    return false;
+                }
+            });
         }
     }
 }

@@ -52,10 +52,10 @@ dependencies {
     //circular image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
         //avatar
-            implementation 'agency.tango.android:avatar-view:0.0.2'
-            //if you want to use Picasso for loading images
-            implementation 'agency.tango.android:avatar-view-picasso:0.0.2'
-            implementation 'agency.tango.android:avatar-view-glide:0.0.2'
+    implementation 'agency.tango.android:avatar-view:0.0.2'
+    //if you want to use Picasso for loading images
+    implementation 'agency.tango.android:avatar-view-picasso:0.0.2'
+    implementation 'agency.tango.android:avatar-view-glide:0.0.2'
 
     //picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -75,6 +75,10 @@ dependencies {
     // Declare the dependencies for the Crashlytics and Analytics libraries
     // When NOT using the BoM, you must specify versions in Firebase library dependencies
     implementation 'com.google.firebase:firebase-crashlytics:18.2.4'
+
+    //Translation
+    implementation 'com.google.mlkit:translate:17.0.0'
+    implementation 'com.google.mlkit:language-id:17.0.3'
 }
 
 apply plugin: 'com.google.firebase.crashlytics'

@@ -9,6 +9,7 @@ import android.os.VibrationEffect;
 import android.os.Vibrator;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -18,6 +19,12 @@ import com.android.volley.AuthFailureError;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.Translation;
+import com.google.mlkit.nl.translate.Translator;
+import com.google.mlkit.nl.translate.TranslatorOptions;
 import com.md.tattle.Utilities.constants;
 import com.md.tattle.encryption.encryptionAes;
 
@@ -217,7 +224,6 @@ public class chat extends Base {
     }
 
     private void getScreenShotStatus() {
-
         FirebaseDatabase.getInstance().getReference().child("ScreenShot")
                 .addValueEventListener(new ValueEventListener() {
                     @Override
@@ -302,7 +308,7 @@ public class chat extends Base {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
 
             // this effect creates the vibration of default amplitude for 1000ms(1 sec)
-            vibrationEffect1 = VibrationEffect.createOneShot(10, VibrationEffect.DEFAULT_AMPLITUDE);
+            vibrationEffect1 = VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE);
 
             // it is safe to cancel other vibrations currently taking place
             vibrator.cancel();
