@@ -1,19 +1,26 @@
 package com.md.tattle.Adapter;
 
+import static android.icu.util.ULocale.getLanguage;
+
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.mlkit.common.model.DownloadConditions;
+import com.google.mlkit.nl.languageid.LanguageIdentification;
+import com.google.mlkit.nl.languageid.LanguageIdentifier;
 import com.google.mlkit.nl.translate.TranslateLanguage;
+import com.google.mlkit.nl.translate.TranslateRemoteModel;
 import com.google.mlkit.nl.translate.Translation;
 import com.google.mlkit.nl.translate.Translator;
 import com.google.mlkit.nl.translate.TranslatorOptions;
@@ -87,6 +94,56 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             long time = messageModel.timeStamp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
             binding.messageBlueTimeStamp.setText(dateFormat.format(new Date(time)));
+
+            binding.materialCardView.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+
+                    TranslatorOptions options =
+                            new TranslatorOptions.Builder()
+                                    .setSourceLanguage(TranslateLanguage.ENGLISH)
+                                    .setTargetLanguage(TranslateLanguage.HINDI)
+                                    .build();
+                    final Translator englishGermanTranslator =
+                            Translation.getClient(options);
+
+                    DownloadConditions conditions = new DownloadConditions.Builder()
+                            .requireWifi()
+                            .build();
+
+                    englishGermanTranslator.downloadModelIfNeeded(conditions)
+                            .addOnSuccessListener(unused -> {
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+
+                                String text = binding.messageBlueText.getText().toString();
+
+                                englishGermanTranslator.translate(text)
+                                        .addOnSuccessListener(new OnSuccessListener<String>() {
+                                            @Override
+                                            public void onSuccess(String s) {
+                                                binding.messageBlueText.setText(s);
+                                            }
+                                        })
+
+                                        .addOnFailureListener(
+                                                new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        // Error.
+                                                        // ...
+                                                    }
+                                                });
+                            })
+                            .addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(context, "failure", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                    return false;
+                }
+            });
         }
     }
 
@@ -104,33 +161,34 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
             long time = messageModel.timeStamp;
             SimpleDateFormat dateFormat = new SimpleDateFormat("hh:mm a");
             binding.messageGreyTimeStamp.setText(dateFormat.format(new Date(time)));
-            //translation part
+            //translation par
+
             binding.materialCardView.setOnLongClickListener(new View.OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
-                    Toast.makeText(context, binding.messageGreyText.getText().toString(), Toast.LENGTH_SHORT).show();
 
                     TranslatorOptions options =
                             new TranslatorOptions.Builder()
                                     .setSourceLanguage(TranslateLanguage.ENGLISH)
                                     .setTargetLanguage(TranslateLanguage.HINDI)
                                     .build();
-                    final Translator englishToHindi =
+                    final Translator englishGermanTranslator =
                             Translation.getClient(options);
 
                     DownloadConditions conditions = new DownloadConditions.Builder()
                             .requireWifi()
                             .build();
 
-                    englishToHindi.downloadModelIfNeeded(conditions)
+                    englishGermanTranslator.downloadModelIfNeeded(conditions)
                             .addOnSuccessListener(unused -> {
                                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
 
-                                englishToHindi.translate(binding.messageGreyText.getText().toString())
+                                String text = binding.messageGreyText.getText().toString();
+
+                                englishGermanTranslator.translate(text)
                                         .addOnSuccessListener(new OnSuccessListener<String>() {
                                             @Override
                                             public void onSuccess(String s) {
-                                                Toast.makeText(context, "Inner success " + s, Toast.LENGTH_SHORT).show();
                                                 binding.messageGreyText.setText(s);
                                             }
                                         })
@@ -141,7 +199,6 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                                                     public void onFailure(@NonNull Exception e) {
                                                         // Error.
                                                         // ...
-                                                        Toast.makeText(context, "Inner failure", Toast.LENGTH_SHORT).show();
                                                     }
                                                 });
                             })
@@ -156,5 +213,6 @@ public class messageAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder
                 }
             });
         }
+
     }
 }
